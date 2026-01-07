@@ -1,0 +1,191 @@
+.create-post-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 0 20px rgba(164, 69, 247, 0.25);
+  width: 100%;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.4s ease;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.create-post-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 0 25px rgba(255, 110, 199, 0.4);
+}
+
+.create-post-card h2 {
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(90deg, #eae3e7, #eeedef);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+}
+
+textarea {
+  width: 700px;
+  max-width: 800px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+  resize: none;
+  min-height: 120px;
+}
+textarea::placeholder {
+  color: #dddcdc;
+  opacity: 1;
+}
+
+textarea:focus {
+  border-color: #ff6ec7;
+  box-shadow: 0 0 10px rgba(255, 110, 199, 0.6);
+  outline: none;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.btn {
+  background: linear-gradient(90deg, #a445f7, #ff6ec7);
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+  padding: 12px 36px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 12px rgba(255, 110, 199, 0.4);
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.25)
+  );
+  transition: all 0.6s ease;
+}
+
+.btn:hover::before {
+  left: 120%;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 20px rgba(255, 110, 199, 0.6);
+}
+
+.btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 0 8px rgba(255, 110, 199, 0.4);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .create-post-card {
+    margin: 20px;
+    padding: 20px;
+  }
+  textarea {
+    min-height: 100px;
+  }
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #333;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.upload-section {
+  margin-bottom: 0.8rem;
+}
+
+input[type="file"] {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.4rem;
+  cursor: pointer;
+  background-color: #fafafa;
+  font-size: 0.85rem;
+}
+
+.preview {
+  text-align: center;
+  margin: 0.8rem 0;
+}
+
+.preview img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
