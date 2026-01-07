@@ -1,0 +1,38 @@
+<p>home works!</p>
+<div class="home-container">
+  <header class="home-header">
+    <h1>Welcome to Your Application</h1>
+    <p>You are successfully logged in!</p>
+  </header>
+
+  <main class="home-content">
+    <div class="cards-container">
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>Dashboard</h3>
+        <p>View your analytics and statistics</p>
+        <a [routerLink]="['/dashboard']" class="btn btn-outline-primary">Go to Dashboard</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <h3>Profile</h3>
+        <p>Manage your account settings</p>
+        <button class="btn btn-outline-secondary">View Profile</button>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-cog"></i>
+        </div>
+        <h3>Settings</h3>
+        <p>Configure application preferences</p>
+        <button class="btn btn-outline-secondary">Open Settings</button>
+      </div>
+    </div>
+  </main>
+</div>
