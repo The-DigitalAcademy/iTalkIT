@@ -1,4 +1,3 @@
-// src/app/store/app.state.ts
 import { ActionReducerMap } from '@ngrx/store';
 import { AuthState } from './auth/auth.state';
 import { authReducer } from './auth/auth.reducer';
