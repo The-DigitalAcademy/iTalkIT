@@ -15,14 +15,16 @@ import { AuthGuard } from './guards/auth.guard';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { reducers } from './store/app.state';
 import { AuthEffects } from './store/auth/auth.effects';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent,
     HomeComponent,
-    DashboardComponent
+    RegisterComponent,
+    DashboardComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

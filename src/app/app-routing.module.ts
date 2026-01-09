@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   
   // Protected routes
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   
   // Wildcard route

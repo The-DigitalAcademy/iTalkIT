@@ -1,38 +1,54 @@
-<p>home works!</p>
-<div class="home-container">
-  <header class="home-header">
-    <h1>Welcome to Your Application</h1>
-    <p>You are successfully logged in!</p>
-  </header>
+<app-navbar></app-navbar>
 
-  <main class="home-content">
-    <div class="cards-container">
-      <div class="card">
-        <div class="card-icon">
-          <i class="fas fa-chart-line"></i>
+<h2 class="page-title">Your Feed</h2>
+
+<div class="page-content">
+  <main class="feed-grid">
+    <div *ngIf="filteredPosts.length === 0" class="no-posts">
+      <p>No posts yet from people you follow.</p>
+    </div>
+
+    <div class="post" *ngFor="let post of filteredPosts">
+      <div class="post-header">
+        <img
+          [src]="getUserById(post.userId)?.profilePicture || 'https://via.placeholder.com/50'"
+          alt="User Avatar"
+          class="avatar"
+        />
+        <div class="post-info">
+          <h3 class="username">
+            {{ getUserById(post.userId)?.username || 'Unknown User' }}
+          </h3>
+          <span class="post-time">{{ post.timestamp | date: 'short' }}</span>
         </div>
-        <h3>Dashboard</h3>
-        <p>View your analytics and statistics</p>
-        <a [routerLink]="['/dashboard']" class="btn btn-outline-primary">Go to Dashboard</a>
       </div>
 
-      <div class="card">
-        <div class="card-icon">
-          <i class="fas fa-user-circle"></i>
-        </div>
-        <h3>Profile</h3>
-        <p>Manage your account settings</p>
-        <button class="btn btn-outline-secondary">View Profile</button>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">
-          <i class="fas fa-cog"></i>
-        </div>
-        <h3>Settings</h3>
-        <p>Configure application preferences</p>
-        <button class="btn btn-outline-secondary">Open Settings</button>
+      <div class="post-content">
+        <img [src]="post.imageUrl" alt="Post Image" class="post-image" />
+        <p class="post-caption">{{ post.caption }}</p>
       </div>
     </div>
   </main>
+
+  <aside class="suggestions">
+    <h3>Who to follow</h3>
+
+    <div class="suggestion-profile" *ngFor="let user of users">
+      <img [src]="user.profilePicture" alt="User Avatar" class="avatar" />
+      <div class="suggestion-info">
+        <span class="username">{{ user.username }}</span>
+        <span class="sub-text">{{ user.email }}</span>
+      </div>
+       <button 
+        class="follow-btn" 
+        (click)="toggleFollow(user.id)"
+        [ngClass]="{ 
+          'followed': isFollowing(user.id),
+          'not-followed': !isFollowing(user.id)
+        }"
+      >
+        {{ isFollowing(user.id) ? 'Unfollow' : 'Follow' }}
+      </button>
+    </div>
+  </aside>
 </div>
