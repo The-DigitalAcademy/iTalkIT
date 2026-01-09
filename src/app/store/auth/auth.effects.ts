@@ -15,6 +15,52 @@ export class AuthEffects {
     private router: Router
   ) {}
 
+// Register Effect
+register$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(AuthActions.register),
+    mergeMap(action =>
+      this.authService.register(action).pipe(
+        map(response =>
+          AuthActions.registerSuccess({ response })
+        ),
+        catchError(error =>
+          of(AuthActions.registerFailure({
+            error: error.error?.message || 'Registration failed'
+          }))
+        )
+      )
+    )
+  )
+);
+
+
+  // Register Success Effect – Redirect to login
+  registerSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.registerSuccess),
+        tap(({ response }) => {
+          console.log('Registration successful:', response);
+          // Optional: show success toast
+          this.router.navigate(['/login']);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  // Register Failure Effect – Log / show error
+  registerFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.registerFailure),
+        tap(({ error }) => {
+          console.error('Registration failed:', error);
+          // Optional: show toast/snackbar
+        })
+      ),
+    { dispatch: false }
+  );
   // Login Effect
   login$ = createEffect(() =>
     this.actions$.pipe(
