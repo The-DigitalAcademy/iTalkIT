@@ -7,10 +7,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
+import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -23,7 +23,6 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent,
     HomeComponent,
     DashboardComponent,
     CreatePostComponent,
