@@ -14,6 +14,8 @@ export interface User {
   password?: string;
   following?: string[]; 
   followers?: string[];   
+ 
+
 }
 
 // Login Request interface

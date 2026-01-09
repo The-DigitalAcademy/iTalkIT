@@ -18,7 +18,7 @@ const routes: Routes = [
  
   
   // Protected routes
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   
   
