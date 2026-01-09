@@ -5,8 +5,9 @@ import { RegisterRequest, RegisterResponse } from '../../models/register.model';
 // Registration
 export const register = createAction(
   '[Auth] Register',
-  props<RegisterRequest>()
+  props<{ request: RegisterRequest }>()
 );
+
 
 export const registerSuccess = createAction(
   '[Auth] Register Success',

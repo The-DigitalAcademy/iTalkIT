@@ -45,7 +45,7 @@ export class RegisterComponent {
   const password = this.registerForm.get('password')!.value!;
 
   this.store.dispatch(
-    AuthActions.register({ fullName, email, password })
+    AuthActions.register({ request: { fullName, email, password } })
   );
     }
 }

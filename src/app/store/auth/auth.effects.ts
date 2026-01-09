@@ -17,10 +17,10 @@ export class AuthEffects {
 
 // Register Effect
 register$ = createEffect(() =>
-  this.actions$.pipe(
+   this.actions$.pipe(
     ofType(AuthActions.register),
-    mergeMap(action =>
-      this.authService.register(action).pipe(
+    mergeMap(({ request }) =>
+      this.authService.register(request).pipe(
         map(response =>
           AuthActions.registerSuccess({ response })
         ),
