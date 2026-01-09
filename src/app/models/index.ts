@@ -10,9 +10,12 @@ export interface User {
   createdAt?: Date;
   updatedAt?: Date;
   roles?: string[];  
-  name?: string;   
-  following: string[];
-  followers: string[];  
+  name?: string;  
+  password?: string;
+  following?: string[]; 
+  followers?: string[];   
+ 
+
 }
 
 // Login Request interface

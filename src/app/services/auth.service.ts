@@ -13,22 +13,23 @@ export class AuthService {
   getCurrentUserId(): string | number | null {
     throw new Error('Method not implemented.');
   }
-  private apiUrl = `${environment.apiUrl}/auth`;
+  private apiUrl = `${environment.apiUrl}/users`;
 
   constructor(private http: HttpClient) {}
 
   // Login Method
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginRequest);
+    return this.http.post<LoginResponse>(`${this.apiUrl}`, loginRequest);
   }
 
   // Register Method
  register(userData: RegisterRequest): Observable<RegisterResponse> {
   return this.http.post<RegisterResponse>(
-    `${this.apiUrl}/register`,
+    `${this.apiUrl}`,
     userData
   );
 }
+
   
 
   // Logout Method

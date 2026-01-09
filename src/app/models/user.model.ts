@@ -1,5 +1,5 @@
 export interface User {
-  id: string;
+  id: string;  
   email: string;
   firstName?: string;
   lastName?: string;
@@ -10,4 +10,23 @@ export interface User {
   followers: string[];
   createdAt?: Date;
   updatedAt?: Date;
+  roles?: string[];  
+  name?: string;  
+  password?: string;
+  following?: string[]; 
+  followers?: string[]; 
+  
+
+
+
+  
+
+ 
+  
+
+
+
+ 
+ 
+ 
 }
