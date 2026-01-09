@@ -1,0 +1,42 @@
+<main class="container">
+  <div class="create-post-card">
+    <h2 class="title">Create New Post</h2>
+
+    <form (ngSubmit)="onSubmit()" #postForm="ngForm">
+      <div>
+        <label for="caption" class="form-label"></label>
+        <textarea
+          id="caption"
+          name="caption"
+          [(ngModel)]="caption"
+          rows="4"
+          placeholder ="What's on your mnind today?..."
+          maxlength="500"
+          required
+        ></textarea>
+      </div>
+
+      <div class="upload-section">
+        <label for="imageUpload" class="form-label">Upload Image</label>
+        <input
+          type="file"
+          id="imageUpload"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          required
+        />
+      </div>
+
+      <div *ngIf="imagePreview" class="preview">
+        <img [src]="imagePreview" alt="Image preview" />
+      </div>
+
+      <div class="buttons">
+        <a routerLink="/home" class="btn cancel">Cancel</a>
+        <button type="submit" class="btn submit" [disabled]="!imagePreview || !caption">
+         Post
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

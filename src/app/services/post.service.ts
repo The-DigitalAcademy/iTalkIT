@@ -19,8 +19,8 @@ export class PostsService {
   }
     
 
-  addPost(newPost: any): Observable<Post> {
-    return this.http.post<Post>(this.postsUrl, newPost)
+  addPost(post: Post): Observable<Post> {
+    return this.http.post<Post>(this.postsUrl, post);
   }
 
   getAllPosts(): any[] {

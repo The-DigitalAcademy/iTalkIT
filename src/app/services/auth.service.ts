@@ -10,6 +10,9 @@ import { RegisterRequest, RegisterResponse } from '../models/register.model';
   providedIn: 'root'
 })
 export class AuthService {
+  getCurrentUserId(): string | number | null {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = `${environment.apiUrl}/auth`;
 
   constructor(private http: HttpClient) {}
