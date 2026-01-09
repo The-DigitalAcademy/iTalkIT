@@ -21,7 +21,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { reducers } from './store/app.state';
 import { AuthEffects } from './store/auth/auth.effects';
 import { CreatePostComponent } from './components/create-post/create-post.component';
-import { ProfileFeedComponent } from './components/profile-feed/profile-feed.component';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { ProfileFeedComponent } from './components/profile-feed/profile-feed.com
     HomeComponent,
     DashboardComponent,
     CreatePostComponent,
-    ProfileFeedComponent
+   
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,9 @@
 export interface Post {
-  id: string;
+  id: number;
   userId: number;
   caption: string;
   imageUrl?: string;
   timestamp: Date;
-  likes: number;
-  comments: Comment[];
+  likes?: number;
+  comments?: Comment[];
 }

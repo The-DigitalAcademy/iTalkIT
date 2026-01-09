@@ -9,6 +9,9 @@ import { LoginRequest, LoginResponse } from '../models';
   providedIn: 'root'
 })
 export class AuthService {
+  getCurrentUserId(): string | number | null {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = `${environment.apiUrl}/auth`;
 
   constructor(private http: HttpClient) {}

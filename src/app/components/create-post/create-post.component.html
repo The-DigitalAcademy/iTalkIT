@@ -10,7 +10,7 @@
           name="caption"
           [(ngModel)]="caption"
           rows="4"
-          placeholder ="Write a caption for your post..."
+          placeholder ="What's on your mnind today?..."
           maxlength="500"
           required
         ></textarea>
@@ -34,7 +34,7 @@
       <div class="buttons">
         <a routerLink="/home" class="btn cancel">Cancel</a>
         <button type="submit" class="btn submit" [disabled]="!imagePreview || !caption">
-          Share Post
+         Post
         </button>
       </div>
     </form>

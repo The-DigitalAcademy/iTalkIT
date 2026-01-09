@@ -7,13 +7,13 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HomeComponent } from './components/home/home.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
-import { ProfileFeedComponent } from './components/profile-feed/profile-feed.component';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'create-post', component: CreatePostComponent },
-  {path: 'profile', component: ProfileFeedComponent},
+ 
   
   // Protected routes
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },

@@ -5,7 +5,7 @@
   box-shadow: 0 0 20px rgba(164, 69, 247, 0.25);
   width: 100%;
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(15, 212, 234, 0.15);
   transition: all 0.4s ease;
   animation: fadeInUp 0.8s ease forwards;
 }
@@ -63,7 +63,7 @@ textarea:focus {
 }
 
 .btn {
-  background: linear-gradient(90deg, #a445f7, #ff6ec7);
+  background: rgb(49, 128, 225);
   color: #fff;
   border: none;
   border-radius: 40px;
@@ -80,7 +80,7 @@ textarea:focus {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 12px rgba(255, 110, 199, 0.4);
+  box-shadow: 0 0 12px rgba(8, 206, 217, 0.4);
 }
 
 .btn::before {
@@ -105,7 +105,7 @@ textarea:focus {
 
 .btn:hover {
   transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 0 20px rgba(255, 110, 199, 0.6);
+  box-shadow: 0 0 20px rgba(5, 198, 205, 0.6);
 }
 
 .btn:active {
@@ -149,7 +149,7 @@ container {
 
 .title {
   text-align: center;
-  color: #333;
+  color: black;
   margin-bottom: 1rem;
   font-size: 1.25rem;
 }

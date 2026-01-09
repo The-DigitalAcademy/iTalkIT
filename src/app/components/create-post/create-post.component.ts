@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostsService } from '../../services/posts.service';
+import { PostsService } from 'src/app/services/post.service'; 
 
 @Component({
   selector: 'app-create-post',
@@ -36,16 +36,13 @@ export class CreatePostComponent {
       caption: this.caption,
       image: this.imagePreview,  
       likes: 0,
-      timestamp: new Date().toISOString(),
-      comments: []
+      timestamp: new Date(),
     };
 
-    // this.postsService.addPost(newPost).subscribe(() => {
-    //   alert('Post shared successfully!');
-    //   this.router.navigate(['/profile']); 
-    // });
+    this.postsService.addPost(newPost).subscribe(() => {
+      alert('Post shared successfully!');
+      this.router.navigate(['/profile']); 
+    });
   }
 
-  
-  
 }
