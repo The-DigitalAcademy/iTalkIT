@@ -17,6 +17,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { reducers } from './store/app.state';
 import { AuthEffects } from './store/auth/auth.effects';
 import { CreatePostComponent } from './components/create-post/create-post.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 @NgModule({
@@ -26,6 +27,8 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
     HomeComponent,
     DashboardComponent,
     CreatePostComponent,
+    RegisterComponent,
+    NavbarComponent,
    
   ],
   imports: [
