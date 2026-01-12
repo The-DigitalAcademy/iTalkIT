@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import * as AuthSelectors from 'src/app/store/auth/auth.selectors';
 import { PostsService } from 'src/app/services/post.service';
-import { User } from 'src/app/models/user.model';
 import { Post } from 'src/app/models/post.model';
+import { User } from 'src/app/models';
 
 @Component({
   selector: 'app-profile',

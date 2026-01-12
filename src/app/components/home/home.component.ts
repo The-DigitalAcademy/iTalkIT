@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { User } from '../../models/user.model';
+import { UserInterface } from '../../models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { Post } from 'src/app/models/post.model';
 import { PostsService } from 'src/app/services/post.service';
@@ -9,6 +9,8 @@ import { AppState } from '../../store/app.state';
 import * as AuthSelectors from '../../store/auth/auth.selectors';
 import * as AuthActions from '../../store/auth/auth.actions';
 import { Subscription } from 'rxjs';
+import { User } from 'src/app/models';
+
 
 @Component({
   selector: 'app-home',
