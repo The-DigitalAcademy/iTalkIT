@@ -5,8 +5,6 @@ export interface RegisterRequest {
 }
 
 export interface RegisterResponse {
-  id?: number;
-  fullName: string;
-  email: string;
-  message?: string;
+  message: string;
+  user?: any; 
 }

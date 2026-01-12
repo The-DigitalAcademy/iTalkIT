@@ -18,6 +18,11 @@ import { reducers } from './store/app.state';
 import { AuthEffects } from './store/auth/auth.effects';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { APP_INITIALIZER } from '@angular/core';
+import { initializeApp } from './app-initializer/app.initializer';
+import { Store } from '@ngrx/store';
+
+
 
 
 @NgModule({
@@ -51,6 +56,12 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [
+    {
+    provide: APP_INITIALIZER,
+    useFactory: initializeApp,
+    deps: [Store],
+    multi: true
+  },
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

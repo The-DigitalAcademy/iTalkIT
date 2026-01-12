@@ -88,17 +88,20 @@ export const authReducer = createReducer(
   })),
 
   // Load auth from storage
-  on(AuthActions.loadAuthFromStorage, (state, { user, accessToken }): AuthState => ({
-  ...state,
-  user: user
-    ? { ...user, following: user.following || [], followers: user.followers || [] }
-    : null,
-  accessToken,
-  refreshToken: null,
-  isLoggedIn: !!accessToken,
-  isLoading: false,
-  error: null
-})),
+on(AuthActions.loadAuthFromStorage, (state, { user, accessToken }): AuthState => {
+  console.log('Reducer - Loading auth from storage:', { user, accessToken });
+  return {
+    ...state,
+    user: user
+      ? { ...user, following: user.following || [], followers: user.followers || [] }
+      : null,
+    accessToken,
+    refreshToken: null,
+    isLoggedIn: !!accessToken && !!user,  // Make sure both exist
+    isLoading: false,
+    error: null
+  };
+}),
 
 
   // Forgot Password

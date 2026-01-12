@@ -6,7 +6,7 @@
       "username": "lmessi10",
       "email": "messi@example.com",
       "password": "messi123",
-      "profileImage": "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400",
+      "profilePicture": "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400",
       "bio": "Living my best life on and off the field",
       "following": [
         "3",
@@ -26,7 +26,7 @@
       "username": "cr7",
       "email": "ronaldo@example.com",
       "password": "cr7forever",
-      "profileImage": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400",
+      "profilePicture": "src/assets/images/photo-1633332755192-727a05c4013d.jpeg",
       "bio": "Siuuuu! Working hard every day",
       "following": [
         "4",
@@ -46,7 +46,7 @@
       "username": "neymarjr",
       "email": "neymar@example.com",
       "password": "neymar10",
-      "profileImage": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400",
+      "profilePicture": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400",
       "bio": "Football is my passion 🔥⚽",
       "following": [
         1,
@@ -66,7 +66,7 @@
       "username": "kmbappe",
       "email": "mbappe@example.com",
       "password": "mbappe7",
-      "profileImage": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+      "profilePicture": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
       "bio": "Speed and goals ⚡",
       "following": [
         1,
@@ -87,7 +87,7 @@
       "username": "erlinghaaland",
       "email": "haaland@example.com",
       "password": "haaland9",
-      "profileImage": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400",
+      "profilePicture": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400",
       "bio": "Goal machine 🤖⚽",
       "following": [
         1,
@@ -108,7 +108,7 @@
       "username": "kevindebruyne",
       "email": "debruyne@example.com",
       "password": "kdb17890",
-      "profileImage": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400",
+      "profilePicture": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400",
       "bio": "Assists and vision 👁️",
       "following": [
         1,
@@ -129,7 +129,7 @@
       "password": "1234567",
       "username": "sbuda",
       "bio": "",
-      "profileImage": "",
+      "profilePicture": "",
       "following": [],
       "followers": []
     },
@@ -140,7 +140,7 @@
       "password": "Muscleman@21",
       "username": "hlogimasipa",
       "bio": "",
-      "profileImage": "",
+      "profilePicture": "",
       "following": [],
       "followers": []
     },
@@ -151,7 +151,7 @@
       "password": "Traf.fik@21",
       "username": "traffikrobhane",
       "bio": "",
-      "profileImage": "",
+      "profilePicture": "",
       "following": [],
       "followers": []
     },
@@ -162,7 +162,7 @@
       "password": "Eat123",
       "username": "eatTb",
       "bio": "",
-      "profileImage": "",
+      "profilePicture": "",
       "following": [],
       "followers": []
     },
@@ -173,7 +173,7 @@
       "password": "1234567",
       "username": "a",
       "bio": "",
-      "profileImage": "",
+      "profilePicture": "",
       "following": [],
       "followers": []
     },
@@ -184,7 +184,7 @@
       "password": "123456",
       "username": "kg",
       "bio": "",
-      "profileImage": "assets/profile.jpeg",
+      "profilePicture": "assets/profile.jpeg",
       "following": [
         "1",
         "3"
@@ -198,7 +198,7 @@
       "password": "pass123",
       "username": "ntokozo",
       "bio": "",
-      "profileImage": "assets/profile.jpeg",
+      "profilePicture": "assets/profile.jpeg",
       "following": [
         "1"
       ],
@@ -211,12 +211,36 @@
       "password": "123pass",
       "username": "ntokozol",
       "bio": "",
-      "profileImage": "assets/profile.jpeg",
+      "profilePicture": "assets/profile.jpeg",
       "following": [
         "1",
         "2"
       ],
       "followers": []
+    },
+    {
+      "id": "efab",
+      "fullName": "ofentse",
+      "email": "user@email.com",
+      "password": "pass123"
+    },
+    {
+      "id": "c597",
+      "username": "user@email.com",
+      "password": "pass123",
+      "rememberMe": false
+    },
+    {
+      "id": "0e9b",
+      "username": "user@email.com",
+      "password": "pass123",
+      "rememberMe": false
+    },
+    {
+      "id": "53a0",
+      "username": "user@email.com",
+      "password": "pass123",
+      "rememberMe": false
     }
   ],
   "posts": [

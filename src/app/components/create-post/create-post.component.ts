@@ -8,6 +8,10 @@ import { PostsService } from 'src/app/services/post.service';
   styleUrls: ['./create-post.component.css'],
 })
 export class CreatePostComponent {
+showKeyboard: any;
+removeImage() {
+throw new Error('Method not implemented.');
+}
   caption: string = '';
   imagePreview: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
