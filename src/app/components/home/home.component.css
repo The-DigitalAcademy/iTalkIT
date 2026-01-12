@@ -21,7 +21,7 @@ body {
   font-size: 34px;
   font-weight: 700;
   text-align: center;
-   background: linear-gradient(90deg, #0492c2);
+   background: linear-gradient(90deg, #1e8cdf);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: 1px;
@@ -47,18 +47,18 @@ body {
 
 
 .post {
-  background: #6F4E37;
+  background: #f3f5f6;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgb(193, 154, 107);
+  box-shadow: 0 4px 20px rgb(107, 190, 216);
   overflow: hidden;
   backdrop-filter: blur(10px);
   transition: all 0.4s ease;
-  border: 1px solid #6F4E37;
+  border: 1px solid #4aa0dd;
 }
 
 .post:hover {
   transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 6px 30px #6F4E37;
+  box-shadow: 0 6px 30px #4aa0dd;
 }
 
 
@@ -74,8 +74,8 @@ body {
   border-radius: 50%;
   margin-right: 12px;
   object-fit: cover;
-  border: 2px solid #B08968;
-  box-shadow: 0 0 8px #97694f;
+  border: 2px solid #4aa0dd;
+  box-shadow: 0 0 8px #4aa0dd;
 }
 
 
@@ -87,13 +87,13 @@ body {
 .post-info .username {
   font-size: 16px;
   font-weight: 600;
-  color: #6F4E37;
+  color: #4aa0dd;
   margin-bottom: 2px;
 }
 
 .post-info .post-time {
   font-size: 13px;
-  color: #B08968;
+  color: #4aa0dd;
 }
 
 
@@ -112,7 +112,7 @@ body {
 .post-caption {
   padding: 15px;
   font-size: 15px;
-  color: #eee;
+  color: #4aa0dd;
   line-height: 1.6;
 }
 
@@ -133,11 +133,11 @@ body {
 .suggestions h3 {
   font-size: 18px;
   font-weight: 600;
-  background: linear-gradient(90deg, #FFF8E7);
+  background: linear-gradient(90deg, #1e8cdf);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 20px;
-  border-bottom: 1px solid #B08968;
+  border-bottom: 1px solid #1894c1;
   padding-bottom: 10px;
 }
 
@@ -153,7 +153,7 @@ body {
   border-radius: 50%;
   margin-right: 12px;
   object-fit: cover;
-  border: 2px solid #6F4E37;
+  border: 2px solid #1e8cdf;
   box-shadow: 0 0 6px #FFF8E7;
 }
 
@@ -166,17 +166,17 @@ body {
 .suggestion-info .username {
   font-size: 15px;
   font-weight: 600;
-  color: #97694f;
+  color: #1e8cdf;
 }
 
 .suggestion-info .sub-text {
   font-size: 13px;
-  color: #B08968;
+  color: #205890;
 }
 
 
 .follow-btn {
-  background: linear-gradient(90deg, #6F4E37);
+  background: linear-gradient(90deg, #1e8cdf);
   color:  rgb(255, 248, 231);
   border: none;
   border-radius: 20px;
@@ -189,7 +189,7 @@ body {
 
 .follow-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 10px #97694f;
+  box-shadow: 0 0 10px #205890;
 }
 
 
@@ -211,4 +211,6 @@ body {
     top: 0;
     margin-top: 20px;
   }
+
+  
 }

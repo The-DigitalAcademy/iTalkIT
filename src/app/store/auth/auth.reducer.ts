@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { AuthState, initialAuthState } from './auth.state';
 import * as AuthActions from './auth.actions';
-import { User } from 'src/app/models/user.model';
 
 // Helper to normalize errors to a string
 function normalizeError(error: unknown): string {
@@ -24,11 +23,9 @@ export const authReducer = createReducer(
 
   on(AuthActions.loginSuccess, (state, { response }): AuthState => ({
   ...state,
-  user: response.user
+  user: response
     ? {
-        ...response.user,
-        following: response.user.following || [],
-        followers: response.user.followers || []
+        ...response
       }
     : null,
   accessToken: response.accessToken,
@@ -88,17 +85,20 @@ export const authReducer = createReducer(
   })),
 
   // Load auth from storage
-  on(AuthActions.loadAuthFromStorage, (state, { user, accessToken }): AuthState => ({
-  ...state,
-  user: user
-    ? { ...user, following: user.following || [], followers: user.followers || [] }
-    : null,
-  accessToken,
-  refreshToken: null,
-  isLoggedIn: !!accessToken,
-  isLoading: false,
-  error: null
-})),
+on(AuthActions.loadAuthFromStorage, (state, { user, accessToken }): AuthState => {
+  console.log('Reducer - Loading auth from storage:', { user, accessToken });
+  return {
+    ...state,
+    user: user
+      ? { ...user, following: user.following || [], followers: user.followers || [] }
+      : null,
+    accessToken,
+    refreshToken: null,
+    isLoggedIn: !!accessToken && !!user,  // Make sure both exist
+    isLoading: false,
+    error: null
+  };
+}),
 
 
   // Forgot Password

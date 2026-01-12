@@ -55,9 +55,21 @@ export class LoginComponent implements OnInit {
 
       this.authService.login(loginRequest).subscribe({
         next: (response: LoginResponse) => {
-          // CORRECT: Pass the entire response
+          console.log('Full login response:', response);
+          console.log('Response accessToken:', response.accessToken);
+          console.log('Response user:', response.user);
+          
+          // Check if response has the data
+          if (!response.accessToken || !response.user) {
+            console.error('Invalid response structure:', response);
+            this.error = 'Login failed - invalid response from server';
+            this.loading = false;
+            return;
+          }
+          
+          // Dispatch to store
           this.store.dispatch(AuthActions.loginSuccess({ 
-            response: response  // ← Fixed!
+            response: response
           }));
           
           // Store token based on rememberMe
@@ -66,10 +78,23 @@ export class LoginComponent implements OnInit {
           storage.setItem('refreshToken', response.refreshToken);
           storage.setItem('user', JSON.stringify(response.user));
           
-          // Navigate to return URL
+          console.log('Login success - stored data:', {
+            accessToken: response.accessToken,
+            user: response.user,
+            storage: loginRequest.rememberMe ? 'localStorage' : 'sessionStorage'
+          });
+          
+          // Store rememberMe preference
+          if (loginRequest.rememberMe) {
+            localStorage.setItem('rememberMe', 'true');
+          }
+          
+          // Reset loading and navigate
+          this.loading = false;
           this.router.navigateByUrl(this.returnUrl);
         },
         error: (error) => {
+          console.error('Login error:', error);
           this.error = error.error?.message || 'Login failed. Please check your credentials.';
           this.loading = false;
         }
@@ -83,7 +108,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // Helper methods for template
-  get username() { return this.loginForm.get('username'); }
-  get password() { return this.loginForm.get('password'); }
+  // Helper methods for template - THESE WERE MISSING
+  get username() { 
+    return this.loginForm.get('username'); 
+  }
+  
+  get password() { 
+    return this.loginForm.get('password'); 
+  }
 }

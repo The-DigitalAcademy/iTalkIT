@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+<main class="container">
+
+
+  <div class="profile" *ngIf="currentUser">
+    <div class="info">
+      <img
+        [src]="currentUser.profilePicture || 'assets/images/profile.jpeg'"
+        alt="Profile Picture"
+        class="picture"
+      />
+
+      <div class="details">
+        <h2 class="name">{{ currentUser.name }}</h2>
+        <p class="username">@{{ currentUser.username }}</p>
+        <p class="bio">{{ currentUser.bio }}</p>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-number">{{ postsCount }}</span>
+            <span class="stat-label">Posts</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">{{ followersCount }}</span>
+            <span class="stat-label">Followers</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">{{ followingCount }}</span>
+            <span class="stat-label">Following</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="posts-section">
+    <h3 class="section-title">My Posts</h3>
+
+    <div class="posts-grid">
+      <div *ngFor="let post of userPosts" class="grid-item">
+        <img [src]="post.imageUrl" [alt]="post.caption" />
+        <button (click)="deletePost(post.id!)">Delete</button>
+      </div>
+
+      <div *ngIf="userPosts.length === 0" class="no-posts">
+        <p>No posts yet. <a routerLink="/create-post">Create your first post!</a></p>
+      </div>
+    </div>
+  </div>
+</main>

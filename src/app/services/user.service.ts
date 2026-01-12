@@ -12,15 +12,15 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUserById(id: string | number): Observable<User> {
-    return this.http.get<User>(`${this.url}/${id}`);
+  getUserById(id: string | number): Observable<UserInterface> {
+    return this.http.get<UserInterface>(`${this.url}/${id}`);
   }
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.url);
+  getUsers(): Observable<UserInterface[]> {
+    return this.http.get<UserInterface[]>(this.url);
   }
 
-  updateUserFollowing(userId: string | number, following: (string | number)[]): Observable<User> {
-    return this.http.patch<User>(`${this.url}/${userId}`, { following: following });
+  updateUserFollowing(userId: string | number, following: (string | number)[]): Observable<UserInterface> {
+    return this.http.patch<UserInterface>(`${this.url}/${userId}`, { following: following });
   }
 }
