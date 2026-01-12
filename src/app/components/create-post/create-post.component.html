@@ -1,4 +1,5 @@
 <!-- Overlay backdrop -->
+<app-navbar></app-navbar>
 <div class="modal-overlay" (click)="closeModal()"></div>
 
 <!-- Modal Container -->
@@ -63,7 +64,7 @@
           maxlength="500"
           required
         ></textarea>
-        <div class="char-count">{{ caption?.length || 0 }}/500</div>
+<div class="char-count">{{ caption.length }}/500</div>
       </div>
 
       <!-- Action Buttons -->

@@ -10,6 +10,9 @@ import { RegisterRequest, RegisterResponse } from '../models/register.model';
   providedIn: 'root'
 })
 export class AuthService {
+  isLoggedIn(): boolean {
+    throw new Error('Method not implemented.');
+  }
   getCurrentUserId(): string | number | null {
     const userJson = localStorage.getItem('user') || sessionStorage.getItem('user');
     if (userJson) {
