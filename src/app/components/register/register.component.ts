@@ -40,12 +40,12 @@ export class RegisterComponent {
     onSubmit() {
   if (this.registerForm.invalid) return;
 
-  const fullName = this.registerForm.get('fullName')!.value!;
+  const username = this.registerForm.get('fullName')!.value!;
   const email = this.registerForm.get('email')!.value!;
   const password = this.registerForm.get('password')!.value!;
 
   this.store.dispatch(
-    AuthActions.register({ request: { fullName, email, password } })
+    AuthActions.register({ request: { username, email, password } })
   );
     }
 }

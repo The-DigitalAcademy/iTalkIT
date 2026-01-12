@@ -13,12 +13,13 @@ export class AuthService {
   getCurrentUserId(): string | number | null {
     throw new Error('Method not implemented.');
   }
-  private apiUrl = `${environment.apiUrl}/users`;
+  private apiUrl = `${environment.apiUrl}users`;
 
   constructor(private http: HttpClient) {}
 
   // Login Method
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
+     console.log("Log in resquest to Backend",loginRequest)
     return this.http.post<LoginResponse>(`${this.apiUrl}`, loginRequest);
   }
 
