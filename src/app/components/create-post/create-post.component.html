@@ -1,23 +1,70 @@
 <main class="container">
   <div class="create-post-card">
-    <h2 class="title">Create New Post</h2>
+    <!-- Header -->
+    <div class="post-header">
+      <a routerLink="/home" class="back-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+      </a>
+      <h2 class="title">Create Post</h2>
+      <button type="submit" form="postForm" class="btn-post" [disabled]="!imagePreview || !caption">
+        Post
+      </button>
+    </div>
 
-    <form (ngSubmit)="onSubmit()" #postForm="ngForm">
-      <div>
+    <form id="postForm" (ngSubmit)="onSubmit()" #postForm="ngForm">
+      <!-- User Info -->
+      <div class="user-info">
+        <div class="avatar">
+          <img src="https://via.placeholder.com/48" alt="User avatar" />
+        </div>
+        <div class="user-details">
+          <span class="username">Username</span>
+        </div>
+      </div>
+
+      <!-- Caption Input -->
+      <div class="caption-section">
         <label for="caption" class="form-label"></label>
         <textarea
           id="caption"
           name="caption"
           [(ngModel)]="caption"
           rows="4"
+<<<<<<< HEAD
           placeholder ="What's on your mind today?..."
+=======
+          placeholder="What's on your mind today?..."
+>>>>>>> 7d815add351ed185929fc1f971363969a0f36766
           maxlength="500"
           required
         ></textarea>
+        <div class="char-count">{{ caption?.length || 0 }}/500</div>
       </div>
 
+      <!-- Image Preview -->
+      <div *ngIf="imagePreview" class="preview">
+        <img [src]="imagePreview" alt="Image preview" />
+        <button type="button" class="remove-image" (click)="removeImage()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Upload Section - Bottom Bar -->
       <div class="upload-section">
-        <label for="imageUpload" class="form-label">Upload Image</label>
+        <p class="upload-label">Add to your post</p>
+        <label for="imageUpload" class="upload-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="2" stroke="#10b981" stroke-width="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5" fill="#10b981"/>
+            <path d="M21 15l-5-5L5 21" stroke="#10b981" stroke-width="2"/>
+          </svg>
+          <span>Photo</span>
+        </label>
         <input
           type="file"
           id="imageUpload"
@@ -25,17 +72,6 @@
           (change)="onFileSelected($event)"
           required
         />
-      </div>
-
-      <div *ngIf="imagePreview" class="preview">
-        <img [src]="imagePreview" alt="Image preview" />
-      </div>
-
-      <div class="buttons">
-        <a routerLink="/home" class="btn cancel">Cancel</a>
-        <button type="submit" class="btn submit" [disabled]="!imagePreview || !caption">
-         Post
-        </button>
       </div>
     </form>
   </div>
