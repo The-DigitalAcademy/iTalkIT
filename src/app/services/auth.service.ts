@@ -13,67 +13,14 @@ export class AuthService {
   isLoggedIn(): boolean {
     throw new Error('Method not implemented.');
   }
-  getCurrentUserId(): string | number | null {
-    const userJson = localStorage.getItem('user') || sessionStorage.getItem('user');
-    if (userJson) {
-      const user = JSON.parse(userJson);
-      return user.id;
-    }
-    return null;
-  }
-  
-  private apiUrl = `${environment.apiUrl}/users`;
+  private apiUrl = `${environment.apiUrl}users`;
 
   constructor(private http: HttpClient) {}
 
   // Login Method - Modified to work with json-server
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
-    // For json-server, we need to find the user by email
-    return this.http.get<any[]>(`${this.apiUrl}?email=${loginRequest.username}`).pipe(
-      map(users => {
-        console.log('Users found:', users);
-        
-        if (users.length === 0) {
-          throw new Error('User not found');
-        }
-        
-        const user = users[0];
-        
-        // In a real app, you'd verify the password on the backend
-        // For now, we'll just check if the user exists
-        if (user.password !== loginRequest.password) {
-          throw new Error('Invalid password');
-        }
-        
-        // Create a mock token (in production, this comes from backend)
-        const accessToken = `mock-token-${user.id}-${Date.now()}`;
-        const refreshToken = `mock-refresh-${user.id}-${Date.now()}`;
-        
-        // Return in the expected format
-        const response: LoginResponse = {
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          user: {
-            id: user.id,
-            username: user.username || user.email,
-            email: user.email,
-            firstName: user.firstName || '',
-            lastName: user.lastName || '',
-            profilePicture: user.profilePicture || 'https://via.placeholder.com/150',
-            bio: user.bio || '',
-            following: user.following || [],
-            followers: user.followers || []
-          }
-        };
-        
-        console.log('Transformed login response:', response);
-        return response;
-      }),
-      catchError(error => {
-        console.error('Login error in service:', error);
-        return throwError(() => error);
-      })
-    );
+     console.log("Log in resquest to Backend",loginRequest)
+    return this.http.post<LoginResponse>(`${this.apiUrl}`, loginRequest);
   }
 
   // Register Method

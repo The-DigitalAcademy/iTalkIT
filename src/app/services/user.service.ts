@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UserInterface } from '../models/user.model';
-
+import { User } from '../models/user.model';
+import { environment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private url = "http://localhost:3000/users";
+  private url = environment.apiUrl+"users"; // this url is consuming the users from our sprintboot 
 
   constructor(private http: HttpClient) { }
 

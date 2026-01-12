@@ -1,15 +1,15 @@
 // src/app/services/post.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { Post } from '../models/post.model';
 import { environment } from 'src/environments/environments';
-import { Post, Comment } from '../models/post.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostsService {
-  private apiUrl = `${environment.apiUrl}/posts`;
+  private postsUrl = environment.apiUrl+"posts";
 
   constructor(private http: HttpClient) {}
 
