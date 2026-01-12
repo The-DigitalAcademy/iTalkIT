@@ -1,70 +1,85 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import * as AuthSelectors from 'src/app/store/auth/auth.selectors';
 import { PostsService } from 'src/app/services/post.service';
-import { UserService } from 'src/app/services/user.service'; 
-
+import { User } from 'src/app/models/user.model';
+import { Post } from 'src/app/models/post.model';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  imports: [CommonModule],
-  standalone: true,
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  posts: any[] = [];
-  currentUserProfile: any = null; 
-  currentUserId: string | number | null = null;
+
+  currentUser: User | null = null;
+  currentUserId: string | null = null;
+
+  userPosts: Post[] = [];
+  loading = true;
+
+  postsCount = 0;
+  followersCount = 0;
+  followingCount = 0;
 
   constructor(
-    private postsService: PostsService, 
-    private authService: AuthService,
-    private userService: UserService 
+    private store: Store<AppState>,
+    private postService: PostsService
   ) {}
 
-  ngOnInit() {
-    this.currentUserId = this.authService.getCurrentUserId(); 
-    
-    
-    if (this.currentUserId) {
-      this.getUserProfile(); 
-      this.getUserPosts();   
-    }
+  ngOnInit(): void {
+    this.loadUserData();
   }
 
-  
-  getUserProfile() {
-    if (this.currentUserId) {
-        this.userService.getUserById(this.currentUserId).subscribe({
-            next: (user) => {
-                this.currentUserProfile = user;
-            },
-            error: (error) => {
-                console.error('Error fetching user profile:', error);
-                this.currentUserProfile = { name: 'Guest', username: 'guest' }; 
-            }
-        });
-    }
+  loadUserData(): void {
+    this.store.select(AuthSelectors.selectUser).subscribe(user => {
+      if (!user) {
+        this.loading = false;
+        return;
+      }
+
+      this.currentUser = user;
+      this.currentUserId = user.id ?? null;
+
+      this.followersCount = user.followers?.length ?? 0;
+      this.followingCount = user.following?.length ?? 0;
+
+      this.loadUserPosts(this.currentUserId!);
+    });
   }
 
-  
-  getUserPosts() {
-    console.log('Current User ID:', this.currentUserId);
-    if (this.currentUserId) {
-      this.postsService.getPostsByUserId(this.currentUserId).subscribe({
-        next: (userPosts) => {
-          console.log('Fetched User Posts:', userPosts);
-          this.posts = userPosts; 
-        },
-        error: (error) => {
-          console.error('Error fetching user posts:', error);
-        }
-      });
-    }
+  loadUserPosts(userId: string): void {
+    this.postService.getPostsByUserId(userId).subscribe({
+      next: (posts) => {
+        this.userPosts = [...posts].sort(
+          (a, b) =>
+            new Date(b.timestamp).getTime() -
+            new Date(a.timestamp).getTime()
+        );
+
+        this.postsCount = this.userPosts.length;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading posts:', error);
+        this.loading = false;
+      },
+    });
   }
 
-  get isLoggedIn(): boolean{
-    return this.authService.isLoggedIn();
+  deletePost(postId: string | number): void {
+    if (!confirm('Are you sure you want to delete this post?')) return;
+
+    this.postService.deletePost(postId).subscribe({
+      next: () => {
+        this.userPosts = this.userPosts.filter(p => p.id === postId ? false : true);
+        this.postsCount = this.userPosts.length;
+      },
+      error: (error) => {
+        console.error('Error deleting post:', error);
+        alert('Failed to delete post');
+      },
+    });
   }
 }

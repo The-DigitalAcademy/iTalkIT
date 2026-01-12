@@ -1,30 +1,35 @@
+// src/app/services/post.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
-import { Post } from '../models/post.model';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environments';
+import { Post, Comment } from '../models/post.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class PostsService {
-  private postsUrl = 'http://localhost:3000/posts';
+  private apiUrl = `${environment.apiUrl}/posts`;
 
   constructor(private http: HttpClient) {}
 
-  getPosts(): Observable<any[]> {
-    return this.http.get<any[]>(this.postsUrl);
-  }
-  getPostsByUserId(userId: string | number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.postsUrl}?userId=${userId}`);
-  }
-    
-
-  addPost(post: Post): Observable<Post> {
-    return this.http.post<Post>(this.postsUrl, post);
+  // Get all posts
+  getPosts(): Observable<Post[]> {
+    return this.http.get<Post[]>(this.apiUrl);
   }
 
-  getAllPosts(): any[] {
-    const stored = localStorage.getItem('posts');
-    return stored ? JSON.parse(stored) : [];
+  // Get posts by user ID
+  getPostsByUserId(userId: string | number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}?userId=${userId}`);
+  }
+
+  // Create a new post
+  createPost(post: Omit<Post, 'id'>): Observable<Post> {
+    return this.http.post<Post>(this.apiUrl, post);
+  }
+
+  // Delete a post
+  deletePost(postId: string | number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${postId}`);
   }
 }
