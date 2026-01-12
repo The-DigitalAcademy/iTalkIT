@@ -1,7 +1,5 @@
-import { User } from '../../models/user.model';
-
 export interface AuthState {
-  user: User | null;                    
+  user: any | null;                    
   accessToken: string | null;
   refreshToken: string | null;
   isLoggedIn: boolean;
