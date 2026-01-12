@@ -1,52 +1,54 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostsService } from 'src/app/services/post.service'; 
 
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
-  styleUrls: ['./create-post.component.css'],
+  styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent {
-showKeyboard: any;
-removeImage() {
-throw new Error('Method not implemented.');
-}
   caption: string = '';
-  imagePreview: string | ArrayBuffer | null = null;
-  selectedFile: File | null = null;
+  imagePreview: string | null = null;
 
-  constructor(private postsService: PostsService, private router: Router) {}
+  constructor(private router: Router) {}
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      this.selectedFile = file;
-
       const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result;
+      reader.onload = (e: any) => {
+        this.imagePreview = e.target.result;
       };
       reader.readAsDataURL(file);
     }
   }
 
-  onSubmit() {
-    if (!this.caption || !this.selectedFile) return;
-
-    const newPost = {
-      id: Date.now(),
-      userId: JSON.parse(localStorage.getItem('currentUser') || '{}').id,
-      caption: this.caption,
-      image: this.imagePreview,  
-      likes: 0,
-      timestamp: new Date(),
-    };
-
-    this.postsService.addPost(newPost).subscribe(() => {
-      alert('Post shared successfully!');
-      this.router.navigate(['/profile']); 
-    });
+  removeImage(): void {
+    this.imagePreview = null;
+    // Reset file input
+    const fileInput = document.getElementById('imageUpload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 
+  closeModal(): void {
+    // Navigate back to home or previous page
+    this.router.navigate(['/home']);
+  }
+
+  onSubmit(): void {
+    if (this.imagePreview && this.caption) {
+      console.log('Submitting post:', {
+        caption: this.caption,
+        image: this.imagePreview
+      });
+      
+      // TODO: Call your post service here
+      // this.postService.createPost({ caption: this.caption, image: this.imagePreview }).subscribe(...)
+      
+      // After successful submission, close modal
+      this.closeModal();
+    }
+  }
 }
