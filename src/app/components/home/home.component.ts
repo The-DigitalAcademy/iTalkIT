@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
   }
 
   toggleFollow(targetUserId: string | number): void { 
-    console.log("Clicked Button ",this.userService)
+    console.log("Clicked Button ",this.currentUser)
     if (!this.currentUser) return; const targetIdString = String(targetUserId);
     
     const currentUserId = this.currentUser.id; 
