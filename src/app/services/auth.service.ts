@@ -10,12 +10,23 @@ import { RegisterRequest, RegisterResponse } from '../models/register.model';
   providedIn: 'root'
 })
 export class AuthService {
-  getCurrentUserId(): string | number | null {
-    throw new Error('Method not implemented.');
-  }
+ 
   private apiUrl = `${environment.apiUrl}/users`;
 
   constructor(private http: HttpClient) {}
+
+  //Check if the user is logged in
+  isLoggedIn(): boolean {
+    const userId = this.getCurrentUserId();
+    return userId !== null && userId !== undefined;
+  }
+
+  // Example implementation of getCurrentUserId
+  getCurrentUserId(): string | number | null {
+    // If you store user id in localStorage or JWT token
+    const user = localStorage.getItem('currentUser');
+    return user ? JSON.parse(user).id : null;
+  }
 
   // Login Method
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
