@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import * as AuthActions from 'src/app/store/auth/auth.actions';
 
 @Component({
   selector: 'app-navbar',
@@ -8,6 +9,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  
+  constructor(private store: Store<AppState>) {}
 
+  onLogout(): void {
+    console.log('Logging out...');
+    this.store.dispatch(AuthActions.logout());
+  }
 }
