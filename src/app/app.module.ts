@@ -45,13 +45,15 @@ import { Store } from '@ngrx/store';
 
    
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, ]),
 
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(), 
       autoPause: true
-    })
+    }),
+
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [
     {
