@@ -21,6 +21,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { APP_INITIALIZER } from '@angular/core';
 import { initializeApp } from './app-initializer/app.initializer';
 import { Store } from '@ngrx/store';
+import { ProfileComponent } from './components/profile/profile.component';
+
 
 
 
@@ -34,6 +36,7 @@ import { Store } from '@ngrx/store';
     CreatePostComponent,
     RegisterComponent,
     NavbarComponent,
+    ProfileComponent,
    
   ],
   imports: [
