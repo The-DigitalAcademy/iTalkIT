@@ -24,7 +24,7 @@
   gap: 10px;
   font-size: 26px;
   font-weight: 700;
-  background: linear-gradient(90deg, #ff6ec7, #a445f7);
+  background: linear-gradient(90deg, #bab6b8, #547ce3);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -65,8 +65,8 @@
 }
 
 .nav-links a:hover {
-  color: #ff6ec7;
-  text-shadow: 0 0 8px rgba(255, 110, 199, 0.8);
+  color: #2f6a8c;
+  text-shadow: 0 0 8px rgba(52, 177, 235, 0.8);
 }
 
 .nav-links a:hover svg {
@@ -78,7 +78,7 @@
   position: absolute;
   width: 0%;
   height: 2px;
-  background: linear-gradient(90deg, #ff6ec7, #a445f7);
+  background: linear-gradient(90deg, #317cba, #2175a6);
   left: 0;
   bottom: -5px;
   transition: 0.3s ease;
