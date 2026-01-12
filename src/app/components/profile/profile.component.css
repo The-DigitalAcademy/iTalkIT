@@ -1,54 +1,55 @@
-.profile-container {
+.container {
   max-width: 935px;
   margin: 0 auto;
   padding: 30px 20px;
 }
 
-.profile-header {
-  display: flex;
-  gap: 40px;
-  padding: 30px 0;
+.profile {
   border-bottom: 1px solid #d1dce6;
   margin-bottom: 40px;
+  padding-bottom: 30px;
 }
 
-.profile-avatar {
-  flex-shrink: 0;
+.info {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
 }
 
-.profile-avatar img {
+.picture {
   width: 150px;
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #5b8ab8;
+  flex-shrink: 0;
 }
 
-.profile-info {
+.details {
   flex: 1;
 }
 
-.profile-name {
+.name {
   font-size: 28px;
   font-weight: 600;
   color: #2d3e50;
   margin: 0 0 8px 0;
 }
 
-.profile-username {
+.username {
   font-size: 16px;
   color: #6b7d92;
   margin: 0 0 16px 0;
 }
 
-.profile-bio {
+.bio {
   font-size: 16px;
   color: #4a5f7a;
   margin-bottom: 24px;
   line-height: 1.5;
 }
 
-.profile-stats {
+.stats {
   display: flex;
   gap: 40px;
 }
@@ -71,20 +72,76 @@
   margin-top: 4px;
 }
 
-.posts-title {
+.posts-section {
+  margin-top: 40px;
+}
+
+.section-title {
   font-size: 20px;
   font-weight: 600;
   color: #2d3e50;
   margin-bottom: 24px;
 }
 
-.loading, .no-posts {
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.grid-item {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.grid-item:hover {
+  transform: scale(1.02);
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.grid-item button {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 8px 16px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  opacity: 0;
+}
+
+.grid-item:hover button {
+  opacity: 1;
+}
+
+.grid-item button:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+}
+
+.no-posts {
+  grid-column: 1 / -1;
   text-align: center;
   padding: 60px 20px;
   color: #6b7d92;
 }
 
-.create-post-link {
+.no-posts a {
   display: inline-block;
   margin-top: 16px;
   padding: 12px 24px;
@@ -96,93 +153,12 @@
   transition: background 0.2s;
 }
 
-.create-post-link:hover {
+.no-posts a:hover {
   background: #4a7199;
 }
 
-.posts-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.post-card {
-  position: relative;
-  aspect-ratio: 1;
-  overflow: hidden;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.post-card:hover {
-  transform: scale(1.02);
-}
-
-.post-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.post-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(45, 62, 80, 0.9);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.3s;
-  padding: 20px;
-}
-
-.post-card:hover .post-overlay {
-  opacity: 1;
-}
-
-.post-caption {
-  color: white;
-  text-align: center;
-  margin-bottom: 16px;
-  font-size: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-.post-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.delete-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  background: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: background 0.2s;
-}
-
-.delete-btn:hover {
-  background: #dc2626;
-}
-
 @media (max-width: 768px) {
-  .profile-header {
+  .info {
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -197,5 +173,18 @@
 @media (max-width: 480px) {
   .posts-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .picture {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .name {
+    font-size: 24px;
+  }
+  
+  .stats {
+    gap: 24px;
   }
 }

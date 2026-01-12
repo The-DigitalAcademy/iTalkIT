@@ -5,6 +5,7 @@ import * as AuthSelectors from 'src/app/store/auth/auth.selectors';
 import { PostsService } from 'src/app/services/post.service';
 import { Post } from 'src/app/models/post.model';
 import { User } from 'src/app/models';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-profile',
