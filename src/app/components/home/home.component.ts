@@ -45,12 +45,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   loadCurrentUser(): void {
     console.log('Loading current user from store...');
-    
-    this.userSubscription = this.store.select(AuthSelectors.selectUser).subscribe(user => {
-      console.log('User from store:', user);
-      this.currentUser = user;
+    this.userSubscription = this.store.select(AuthSelectors.selectUser).subscribe(response => {
+      console.log('User from store:', response);
+      this.currentUser = response.user;
       
-      if (this.currentUser && this.currentUser.following) {
+      if (this.currentUser && this.currentUser.following.length > 0) {
         this.followingIds = this.currentUser.following.map(id => String(id));
         console.log('Following IDs:', this.followingIds);
         // Reload posts when user changes

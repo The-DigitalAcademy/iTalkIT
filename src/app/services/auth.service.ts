@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
-    return this.http.get<any[]>(`${this.apiUrl}?email=${loginRequest.username}`).pipe(
+    return this.http.get<any>(`${this.apiUrl}?email=${loginRequest.username}`).pipe(
       map(users => {
         console.log('Users found:', users);
         

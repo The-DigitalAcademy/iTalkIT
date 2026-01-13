@@ -34,17 +34,17 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUserData(): void {
-    this.store.select(AuthSelectors.selectUser).subscribe(user => {
-      if (!user) {
+    this.store.select(AuthSelectors.selectUser).subscribe(response => {
+      if (!response.user) {
         this.loading = false;
         return;
       }
 
-      this.currentUser = user;
-      this.currentUserId = user.id ?? null;
+      this.currentUser = response.user;
+      this.currentUserId = response.user.id ?? null;
 
-      this.followersCount = user.followers?.length ?? 0;
-      this.followingCount = user.following?.length ?? 0;
+      this.followersCount = response.user.followers?.length ?? 0;
+      this.followingCount = response.user.following?.length ?? 0;
 
       this.loadUserPosts(this.currentUserId!);
     });
