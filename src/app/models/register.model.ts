@@ -1,12 +1,10 @@
 export interface RegisterRequest {
-  username: string;
+  fullName: string;
   email: string;
   password: string;
 }
 
 export interface RegisterResponse {
-  id?: number;
-  username: string;
-  email: string;
-  message?: string;
+  message: string;
+  user?: any;
 }
