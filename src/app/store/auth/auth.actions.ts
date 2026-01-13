@@ -1,13 +1,13 @@
 import { createAction, props } from '@ngrx/store';
-import { User, LoginRequest, LoginResponse } from '../../models';
-import { RegisterRequest, RegisterResponse } from '../../models/register.model';
+import { User } from 'src/app/models';
+import { LoginRequest, LoginResponse } from 'src/app/models/login.model';
+import { RegisterRequest, RegisterResponse } from 'src/app/models';
 
 // Registration
 export const register = createAction(
   '[Auth] Register',
   props<{ request: RegisterRequest }>()
 );
-
 
 export const registerSuccess = createAction(
   '[Auth] Register Success',
@@ -58,7 +58,8 @@ export const refreshTokenFailure = createAction(
 export const loadAuthFromStorage = createAction(
   '[Auth] Load From Storage',
   props<{ user: User | null; accessToken: string | null }>()  
-);export const saveAuthToStorage = createAction('[Auth] Save To Storage');
+);
+export const saveAuthToStorage = createAction('[Auth] Save To Storage');
 
 // User Management
 export const updateUser = createAction(

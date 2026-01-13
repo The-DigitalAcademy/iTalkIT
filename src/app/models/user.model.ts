@@ -1,16 +1,13 @@
-export interface UserInterface {
-  id: string;
+export interface User {
+  id: string | number;
+  username: string;
   email: string;
-  firstName?: string;
-  lastName?: string;
-  username?: string;
+  password?: string;
+  firstName: string;
+  lastName: string;
+  name?: string;
   profilePicture?: string;
   bio?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  roles?: string[];
-  following: string[];   
-  followers: string[];   
-  name?: string;
-  password?: string;
+  following: (string | number)[];
+  followers: (string | number)[];
 }

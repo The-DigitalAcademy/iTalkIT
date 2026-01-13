@@ -7,14 +7,12 @@ import { AppState } from '../../store/app.state';
 import * as AuthActions from '../../store/auth/auth.actions';
 import * as AuthSelectors from '../../store/auth/auth.selectors';
 
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-
     loading$ = this.store.select(AuthSelectors.selectIsLoading);
     error$ = this.store.select(AuthSelectors.selectError);
 
@@ -38,14 +36,14 @@ export class RegisterComponent {
     }
 
     onSubmit() {
-  if (this.registerForm.invalid) return;
+        if (this.registerForm.invalid) return;
 
-  const username = this.registerForm.get('fullName')!.value!;
-  const email = this.registerForm.get('email')!.value!;
-  const password = this.registerForm.get('password')!.value!;
+        const fullName = this.registerForm.get('fullName')!.value!;
+        const email = this.registerForm.get('email')!.value!;
+        const password = this.registerForm.get('password')!.value!;
 
-  this.store.dispatch(
-    AuthActions.register({ request: { username, email, password } })
-  );
+        this.store.dispatch(
+            AuthActions.register({ request: { fullName, email, password } })
+        );
     }
 }

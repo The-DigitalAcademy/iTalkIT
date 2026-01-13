@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import * as AuthActions from '../../store/auth/auth.actions';
 import { AuthService } from '../../services/auth.service';
-import { LoginRequest, LoginResponse } from '../../models';
+import { LoginRequest, LoginResponse } from '../../models/login.model';
 
 @Component({
   selector: 'app-login',
@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit {
           console.log('Response accessToken:', response.accessToken);
           console.log('Response user:', response.user);
           
-          // Check if response has the data
           if (!response.accessToken || !response.user) {
             console.error('Invalid response structure:', response);
             this.error = 'Login failed - invalid response from server';
@@ -67,12 +66,10 @@ export class LoginComponent implements OnInit {
             return;
           }
           
-          // Dispatch to store
           this.store.dispatch(AuthActions.loginSuccess({ 
             response: response
           }));
           
-          // Store token based on rememberMe
           const storage = loginRequest.rememberMe ? localStorage : sessionStorage;
           storage.setItem('accessToken', response.accessToken);
           storage.setItem('refreshToken', response.refreshToken);
@@ -84,12 +81,10 @@ export class LoginComponent implements OnInit {
             storage: loginRequest.rememberMe ? 'localStorage' : 'sessionStorage'
           });
           
-          // Store rememberMe preference
           if (loginRequest.rememberMe) {
             localStorage.setItem('rememberMe', 'true');
           }
           
-          // Reset loading and navigate
           this.loading = false;
           this.router.navigateByUrl(this.returnUrl);
         },
@@ -100,7 +95,6 @@ export class LoginComponent implements OnInit {
         }
       });
     } else {
-      // Mark all fields as touched to trigger validation messages
       Object.keys(this.loginForm.controls).forEach(key => {
         const control = this.loginForm.get(key);
         control?.markAsTouched();
@@ -108,7 +102,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // Helper methods for template - THESE WERE MISSING
   get username() { 
     return this.loginForm.get('username'); 
   }
