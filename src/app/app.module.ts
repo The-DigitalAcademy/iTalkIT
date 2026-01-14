@@ -1,18 +1,77 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { FormsModule } from '@angular/forms';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
+import { AppRoutingModule } from './app-routing.module';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { reducers } from './store/app.state';
+import { AuthEffects } from './store/auth/auth.effects';
+import { CreatePostComponent } from './components/create-post/create-post.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { APP_INITIALIZER } from '@angular/core';
+import { initializeApp } from './app-initializer/app.initializer';
+import { Store } from '@ngrx/store';
+import { ProfileComponent } from './components/profile/profile.component';
+
+
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    HomeComponent,
+    DashboardComponent,
+    CreatePostComponent,
+    RegisterComponent,
+    NavbarComponent,
+    ProfileComponent,
+   
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    AppRoutingModule,
+
+   
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([AuthEffects, ]),
+
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: !isDevMode(), 
+      autoPause: true
+    }),
+
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
-  providers: [],
+  providers: [
+    {
+    provide: APP_INITIALIZER,
+    useFactory: initializeApp,
+    deps: [Store],
+    multi: true
+  },
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
