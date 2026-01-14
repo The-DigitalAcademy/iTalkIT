@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label>Confirm Password</label>
                 <input type="password" formControlName="confirmPassword" placeholder="Confirm your password">
-                <small *ngIf="registerForm.errors?.['passwordMismatch']">
+                <small class="alert alert-danger" *ngIf="registerForm.errors?.['passwordMismatch']">
                     Passwords do not match
                 </small>
             </div>
@@ -42,7 +42,7 @@
             </button>
 
             <div class="register-link">
-                <p>Already have an account? <a href="http://localhost:4200/login">Login here</a></p>
+                <p>Already have an account? <a href="http://localhost:4200/login"><span>Login here</span></a></p>
             </div>
         </form>
     </div>
