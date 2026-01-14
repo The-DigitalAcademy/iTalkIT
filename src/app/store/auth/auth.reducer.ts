@@ -14,29 +14,6 @@ export const initialState: AuthState = {
 export const authReducer = createReducer(
   initialState,
   
-  // Login
-  on(AuthActions.login, (state) => ({
-    ...state,
-    isLoading: true,
-    error: null
-  })),
-  
-  on(AuthActions.loginSuccess, (state, { response }) => ({
-    ...state,
-    user: response.user,
-    accessToken: response.accessToken,
-    refreshToken: response.refreshToken,
-    isLoggedIn: true,
-    isLoading: false,
-    error: null
-  })),
-  
-  on(AuthActions.loginFailure, (state, { error }) => ({
-    ...state,
-    isLoading: false,
-    error
-  })),
-  
   // Register
   on(AuthActions.register, (state) => ({
     ...state,
@@ -56,6 +33,45 @@ export const authReducer = createReducer(
     error
   })),
   
+  // Login
+  on(AuthActions.login, (state) => ({
+    ...state,
+    isLoading: true,
+    error: null
+  })),
+  
+  on(AuthActions.loginSuccess, (state, { response }) => ({
+    ...state,
+    user: response.user,
+    accessToken: response.accessToken,
+    refreshToken: response.refreshToken || null,
+    isLoggedIn: true,
+    isLoading: false,
+    error: null
+  })),
+  
+  on(AuthActions.loginFailure, (state, { error }) => ({
+    ...state,
+    isLoading: false,
+    error,
+    isLoggedIn: false
+  })),
+  
+  // Load from Storage (IMPORTANT - this is what's missing!)
+  on(AuthActions.loadAuthFromStorage, (state, { user, accessToken }) => {
+    if (user && accessToken) {
+      return {
+        ...state,
+        user,
+        accessToken,
+        isLoggedIn: true,
+        isLoading: false,
+        error: null
+      };
+    }
+    return state;
+  }),
+  
   // Logout
   on(AuthActions.logout, (state) => ({
     ...state,
@@ -73,7 +89,25 @@ export const authReducer = createReducer(
   // Update User
   on(AuthActions.updateUser, (state, { user }) => ({
     ...state,
-    user
+    user: { ...state.user, ...user } as any
+  })),
+  
+  // Refresh Token
+  on(AuthActions.refreshToken, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+  
+  on(AuthActions.refreshTokenSuccess, (state, { accessToken }) => ({
+    ...state,
+    accessToken,
+    isLoading: false
+  })),
+  
+  on(AuthActions.refreshTokenFailure, (state, { error }) => ({
+    ...state,
+    isLoading: false,
+    error
   })),
   
   // Forgot Password
@@ -85,8 +119,7 @@ export const authReducer = createReducer(
   
   on(AuthActions.forgotPasswordSuccess, (state) => ({
     ...state,
-    isLoading: false,
-    error: null
+    isLoading: false
   })),
   
   on(AuthActions.forgotPasswordFailure, (state, { error }) => ({

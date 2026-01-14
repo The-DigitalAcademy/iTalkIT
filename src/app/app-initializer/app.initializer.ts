@@ -1,4 +1,3 @@
-// src/app/app.initializer.ts
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.state';
 import * as AuthActions from '../store/auth/auth.actions';
@@ -6,6 +5,8 @@ import * as AuthActions from '../store/auth/auth.actions';
 export function initializeApp(store: Store<AppState>) {
   return (): Promise<void> => {
     return new Promise((resolve) => {
+      console.log('App Initializer - Starting');
+      
       // Check both localStorage and sessionStorage
       const accessToken = localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
       const userJson = localStorage.getItem('user') || sessionStorage.getItem('user');
@@ -13,16 +14,20 @@ export function initializeApp(store: Store<AppState>) {
       if (accessToken && userJson) {
         try {
           const user = JSON.parse(userJson);
-          console.log('Loading auth from storage:', user);
+          console.log('App Initializer - Loading auth from storage:', user);
           store.dispatch(AuthActions.loadAuthFromStorage({ user, accessToken }));
         } catch (error) {
-          console.error('Error parsing stored user data:', error);
+          console.error('App Initializer - Error parsing stored user data:', error);
           // Clear invalid data
-          localStorage.clear();
-          sessionStorage.clear();
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          localStorage.removeItem('user');
+          sessionStorage.removeItem('accessToken');
+          sessionStorage.removeItem('refreshToken');
+          sessionStorage.removeItem('user');
         }
       } else {
-        console.log('No stored auth data found');
+        console.log('App Initializer - No stored auth data found');
       }
       
       resolve();

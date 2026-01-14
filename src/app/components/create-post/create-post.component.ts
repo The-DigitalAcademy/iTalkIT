@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostsService } from 'src/app/services/post.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import * as AuthSelectors from 'src/app/store/auth/auth.selectors';
 import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/models';
 
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css']
 })
-export class CreatePostComponent implements OnInit {
+export class CreatePostComponent implements OnInit, OnDestroy {
   caption: string = '';
   imagePreview: string | null = null;
   currentUserId: string | number | null = null;
   loading: boolean = false;
+
+  private userSubscription?: Subscription;
 
   constructor(
     private router: Router,
@@ -24,13 +28,18 @@ export class CreatePostComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // selectUser returns the user directly, not wrapped
-    this.store.select(AuthSelectors.selectUser).pipe(
-      filter(user => user !== null && user !== undefined)
+    this.userSubscription = this.store.select(AuthSelectors.selectUser).pipe(
+      filter((user): user is User => user !== null && user !== undefined)
     ).subscribe(user => {
       this.currentUserId = user.id ?? null;
       console.log('Current user ID in create post:', this.currentUserId);
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   onFileSelected(event: any): void {

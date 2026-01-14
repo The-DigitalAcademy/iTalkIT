@@ -1,5 +1,7 @@
+import { User } from 'src/app/models';
+
 export interface AuthState {
-  user: any | null;                    
+  user: User | null;
   accessToken: string | null;
   refreshToken: string | null;
   isLoggedIn: boolean;
@@ -8,7 +10,7 @@ export interface AuthState {
 }
 
 export const initialAuthState: AuthState = {
-  user: null,                          
+  user: null,
   accessToken: null,
   refreshToken: null,
   isLoggedIn: false,

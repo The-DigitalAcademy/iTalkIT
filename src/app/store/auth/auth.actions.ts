@@ -1,3 +1,4 @@
+// src/app/store/auth/auth.actions.ts
 import { createAction, props } from '@ngrx/store';
 import { User } from 'src/app/models';
 import { LoginRequest, LoginResponse } from 'src/app/models/login.model';
@@ -37,7 +38,9 @@ export const loginFailure = createAction(
 
 // Logout
 export const logout = createAction('[Auth] Logout');
+
 export const logoutSuccess = createAction('[Auth] Logout Success');
+
 export const logoutFailure = createAction(
   '[Auth] Logout Failure',
   props<{ error: string }>()
@@ -45,26 +48,29 @@ export const logoutFailure = createAction(
 
 // Token Management
 export const refreshToken = createAction('[Auth] Refresh Token');
+
 export const refreshTokenSuccess = createAction(
   '[Auth] Refresh Token Success',
   props<{ accessToken: string }>()
 );
+
 export const refreshTokenFailure = createAction(
   '[Auth] Refresh Token Failure',
   props<{ error: string }>()
 );
 
-// Storage
+// Storage - Load auth state from localStorage/sessionStorage on app init
 export const loadAuthFromStorage = createAction(
   '[Auth] Load From Storage',
-  props<{ user: User | null; accessToken: string | null }>()  
+  props<{ user: User; accessToken: string }>()
 );
+
 export const saveAuthToStorage = createAction('[Auth] Save To Storage');
 
-// User Management
+// User Management - Update user info (e.g., after follow/unfollow)
 export const updateUser = createAction(
   '[Auth] Update User',
-  props<{ user: Partial<User> }>()
+  props<{ user: User }>()
 );
 
 // Forgot Password
@@ -72,10 +78,12 @@ export const forgotPassword = createAction(
   '[Auth] Forgot Password',
   props<{ email: string }>()
 );
+
 export const forgotPasswordSuccess = createAction(
   '[Auth] Forgot Password Success',
   props<{ message: string }>()
 );
+
 export const forgotPasswordFailure = createAction(
   '[Auth] Forgot Password Failure',
   props<{ error: string }>()
