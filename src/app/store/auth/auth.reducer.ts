@@ -1,141 +1,97 @@
 import { createReducer, on } from '@ngrx/store';
-import { AuthState, initialAuthState } from './auth.state';
 import * as AuthActions from './auth.actions';
+import { AuthState } from './auth.state';
 
-// Helper to normalize errors to a string
-function normalizeError(error: unknown): string {
-  if (typeof error === 'string') return error;
-  if (error && typeof error === 'object' && 'message' in error) {
-    return (error as { message: string }).message;
-  }
-  return 'An unexpected error occurred';
-}
-
-export const authReducer = createReducer(
-  initialAuthState,
-
-  // Login
-  on(AuthActions.login, (state): AuthState => ({
-    ...state,
-    isLoading: true,
-    error: null
-  })),
-
-  on(AuthActions.loginSuccess, (state, { response }): AuthState => ({
-  ...state,
-  user: response
-    ? {
-        ...response
-      }
-    : null,
-  accessToken: response.accessToken,
-  refreshToken: response.refreshToken || null,
-  isLoggedIn: true,
+export const initialState: AuthState = {
+  user: null,
+  accessToken: null,
+  refreshToken: null,
+  isLoggedIn: false,
   isLoading: false,
   error: null
-})),
+};
 
-
-
-  on(AuthActions.loginFailure, (state, { error }): AuthState => ({
+export const authReducer = createReducer(
+  initialState,
+  
+  // Login
+  on(AuthActions.login, (state) => ({
+    ...state,
+    isLoading: true,
+    error: null
+  })),
+  
+  on(AuthActions.loginSuccess, (state, { response }) => ({
+    ...state,
+    user: response.user,
+    accessToken: response.accessToken,
+    refreshToken: response.refreshToken,
+    isLoggedIn: true,
+    isLoading: false,
+    error: null
+  })),
+  
+  on(AuthActions.loginFailure, (state, { error }) => ({
     ...state,
     isLoading: false,
-    error: normalizeError(error)
+    error
   })),
-
+  
+  // Register
+  on(AuthActions.register, (state) => ({
+    ...state,
+    isLoading: true,
+    error: null
+  })),
+  
+  on(AuthActions.registerSuccess, (state) => ({
+    ...state,
+    isLoading: false,
+    error: null
+  })),
+  
+  on(AuthActions.registerFailure, (state, { error }) => ({
+    ...state,
+    isLoading: false,
+    error
+  })),
+  
   // Logout
-  on(AuthActions.logout, (state): AuthState => ({
+  on(AuthActions.logout, (state) => ({
     ...state,
     isLoading: true
   })),
-
-  on(AuthActions.logoutSuccess, (): AuthState => ({
-    ...initialAuthState
-  })),
-
-  on(AuthActions.logoutFailure, (state, { error }): AuthState => ({
+  
+  on(AuthActions.logoutSuccess, () => initialState),
+  
+  on(AuthActions.logoutFailure, (state, { error }) => ({
     ...state,
     isLoading: false,
-    error: normalizeError(error)
+    error
   })),
-
-  // Registration
-  on(AuthActions.register, (state): AuthState => ({
-    ...state,
-    isLoading: true,
-    error: null
-  })),
-
-  on(AuthActions.registerSuccess, (state): AuthState => ({
-    ...state,
-    isLoading: false,
-    error: null
-  })),
-
-  on(AuthActions.registerFailure, (state, { error }): AuthState => ({
-    ...state,
-    isLoading: false,
-    error: normalizeError(error)
-  })),
-
+  
   // Update User
-  on(AuthActions.updateUser, (state, { user }): AuthState => ({
+  on(AuthActions.updateUser, (state, { user }) => ({
     ...state,
-    user: state.user ? { ...state.user, ...user } : null
+    user
   })),
-
-  // Load auth from storage
-on(AuthActions.loadAuthFromStorage, (state, { user, accessToken }): AuthState => {
-  console.log('Reducer - Loading auth from storage:', { user, accessToken });
-  return {
-    ...state,
-    user: user
-      ? { ...user, following: user.following || [], followers: user.followers || [] }
-      : null,
-    accessToken,
-    refreshToken: null,
-    isLoggedIn: !!accessToken && !!user,  // Make sure both exist
-    isLoading: false,
-    error: null
-  };
-}),
-
-
+  
   // Forgot Password
-  on(AuthActions.forgotPassword, (state): AuthState => ({
+  on(AuthActions.forgotPassword, (state) => ({
     ...state,
     isLoading: true,
     error: null
   })),
-
-  on(AuthActions.forgotPasswordSuccess, (state): AuthState => ({
+  
+  on(AuthActions.forgotPasswordSuccess, (state) => ({
     ...state,
     isLoading: false,
     error: null
   })),
-
-  on(AuthActions.forgotPasswordFailure, (state, { error }): AuthState => ({
+  
+  on(AuthActions.forgotPasswordFailure, (state, { error }) => ({
     ...state,
     isLoading: false,
-    error: normalizeError(error)
-  })),
-
-  // Refresh Token
-  on(AuthActions.refreshToken, (state): AuthState => ({
-    ...state,
-    isLoading: true
-  })),
-
-  on(AuthActions.refreshTokenSuccess, (state, { accessToken }): AuthState => ({
-    ...state,
-    accessToken,
-    isLoading: false,
-    error: null
-  })),
-
-  on(AuthActions.refreshTokenFailure, (state, { error }): AuthState => ({
-    ...state,
-    isLoading: false,
-    error: normalizeError(error)
+    error
   }))
 );

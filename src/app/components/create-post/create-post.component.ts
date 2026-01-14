@@ -4,6 +4,7 @@ import { PostsService } from 'src/app/services/post.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import * as AuthSelectors from 'src/app/store/auth/auth.selectors';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-post',
@@ -23,11 +24,14 @@ export class CreatePostComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  this.store.select(AuthSelectors.selectUserId).subscribe(userId => {
-    this.currentUserId = userId ?? null;
-  });
-}
-
+    // selectUser returns the user directly, not wrapped
+    this.store.select(AuthSelectors.selectUser).pipe(
+      filter(user => user !== null && user !== undefined)
+    ).subscribe(user => {
+      this.currentUserId = user.id ?? null;
+      console.log('Current user ID in create post:', this.currentUserId);
+    });
+  }
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
@@ -51,6 +55,8 @@ export class CreatePostComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log('Submit clicked. Current user ID:', this.currentUserId);
+    
     if (!this.currentUserId) {
       alert('Please log in to create a post');
       return;
@@ -71,6 +77,8 @@ export class CreatePostComponent implements OnInit {
       likes: 0,
       comments: []
     };
+
+    console.log('Creating post:', newPost);
 
     this.postService.createPost(newPost).subscribe({
       next: () => {

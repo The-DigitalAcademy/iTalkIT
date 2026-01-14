@@ -4,8 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import * as AuthActions from '../../store/auth/auth.actions';
-import { AuthService } from '../../services/auth.service';
-import { LoginRequest, LoginResponse } from '../../models/login.model';
+import { LoginRequest } from '../../models/login.model';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +21,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private store: Store<AppState>,
-    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -53,44 +51,27 @@ export class LoginComponent implements OnInit {
         rememberMe: this.loginForm.get('rememberMe')?.value || false
       };
 
-      this.authService.login(loginRequest).subscribe({
-        next: (response: LoginResponse) => {
-          console.log('Full login response:', response);
-          console.log('Response accessToken:', response.accessToken);
-          console.log('Response user:', response.user);
-          
-          if (!response.accessToken || !response.user) {
-            console.error('Invalid response structure:', response);
-            this.error = 'Login failed - invalid response from server';
-            this.loading = false;
-            return;
-          }
-          
-          this.store.dispatch(AuthActions.loginSuccess({ 
-            response: response
-          }));
-          
-          const storage = loginRequest.rememberMe ? localStorage : sessionStorage;
-          storage.setItem('accessToken', response.accessToken);
-          storage.setItem('refreshToken', response.refreshToken);
-          storage.setItem('user', JSON.stringify(response.user));
-          
-          console.log('Login success - stored data:', {
-            accessToken: response.accessToken,
-            user: response.user,
-            storage: loginRequest.rememberMe ? 'localStorage' : 'sessionStorage'
-          });
-          
-          if (loginRequest.rememberMe) {
-            localStorage.setItem('rememberMe', 'true');
-          }
-          
+      // Store rememberMe preference first so effects can access it
+      if (loginRequest.rememberMe) {
+        localStorage.setItem('rememberMe', 'true');
+      } else {
+        localStorage.removeItem('rememberMe');
+      }
+
+      console.log('Dispatching login action with credentials:', loginRequest);
+      
+      // Dispatch the login action - the effect will handle the rest
+      this.store.dispatch(AuthActions.login({ credentials: loginRequest }));
+      
+      // Subscribe to auth state to handle success/failure
+      this.store.select(state => state.auth).subscribe(authState => {
+        if (authState.isLoggedIn && authState.user) {
+          console.log('Login successful, user in store:', authState.user);
           this.loading = false;
-          this.router.navigateByUrl(this.returnUrl);
-        },
-        error: (error) => {
-          console.error('Login error:', error);
-          this.error = error.error?.message || 'Login failed. Please check your credentials.';
+          // Navigation is handled by the effect
+        } else if (authState.error) {
+          console.error('Login error from store:', authState.error);
+          this.error = authState.error;
           this.loading = false;
         }
       });

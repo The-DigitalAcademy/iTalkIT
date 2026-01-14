@@ -5,7 +5,7 @@ import * as AuthSelectors from 'src/app/store/auth/auth.selectors';
 import { PostsService } from 'src/app/services/post.service';
 import { Post } from 'src/app/models/post.model';
 import { User } from 'src/app/models';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { filter, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +24,8 @@ export class ProfileComponent implements OnInit {
   followersCount = 0;
   followingCount = 0;
 
+  readonly FALLBACK_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect fill="%23e0e0e0" width="400" height="400"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="24"%3ENo Image%3C/text%3E%3C/svg%3E';
+
   constructor(
     private store: Store<AppState>,
     private postService: PostsService
@@ -34,23 +36,33 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUserData(): void {
-    this.store.select(AuthSelectors.selectUser).subscribe(response => {
-      if (!response.user) {
+    this.store.select(AuthSelectors.selectUser).pipe(
+      filter(user => user !== null && user !== undefined),
+      distinctUntilChanged()
+    ).subscribe(user => {
+      this.currentUser = user;
+      this.currentUserId = user.id ?? null;
+
+      this.followersCount = user.followers?.length ?? 0;
+      this.followingCount = user.following?.length ?? 0;
+
+      // Only load posts if we have a valid userId
+      if (this.currentUserId) {
+        this.loadUserPosts(this.currentUserId);
+      } else {
         this.loading = false;
-        return;
       }
-
-      this.currentUser = response.user;
-      this.currentUserId = response.user.id ?? null;
-
-      this.followersCount = response.user.followers?.length ?? 0;
-      this.followingCount = response.user.following?.length ?? 0;
-
-      this.loadUserPosts(this.currentUserId!);
     });
   }
 
   loadUserPosts(userId: string): void {
+    // Double-check userId is valid
+    if (!userId || userId === 'null' || userId === 'undefined') {
+      console.error('Invalid userId provided to loadUserPosts');
+      this.loading = false;
+      return;
+    }
+
     this.postService.getPostsByUserId(userId).subscribe({
       next: (posts) => {
         this.userPosts = [...posts].sort(
@@ -74,7 +86,7 @@ export class ProfileComponent implements OnInit {
 
     this.postService.deletePost(postId).subscribe({
       next: () => {
-        this.userPosts = this.userPosts.filter(p => p.id === postId ? false : true);
+        this.userPosts = this.userPosts.filter(p => p.id !== postId);
         this.postsCount = this.userPosts.length;
       },
       error: (error) => {
@@ -82,5 +94,9 @@ export class ProfileComponent implements OnInit {
         alert('Failed to delete post');
       },
     });
+  }
+
+  onImageError(event: any): void {
+    event.target.src = this.FALLBACK_IMAGE;
   }
 }

@@ -1,4 +1,3 @@
-
 <app-navbar></app-navbar>
 <h2 class="page-title">Your Feed</h2>
 
@@ -11,20 +10,26 @@
     <div class="post" *ngFor="let post of filteredPosts">
       <div class="post-header">
         <img
-          [src]="getUserById(post.userId)?.profilePicture || 'https://via.placeholder.com/50'"
+          [src]="getUserAvatar(post)"
+          (error)="onImageError($event)"
           alt="User Avatar"
           class="avatar"
         />
         <div class="post-info">
           <h3 class="username">
-            {{ getUserById(post.userId)?.username || 'Unknown User' }}
+            {{ getUserDisplayName(post) }}
           </h3>
           <span class="post-time">{{ post.timestamp | date: 'short' }}</span>
         </div>
       </div>
 
       <div class="post-content">
-        <img [src]="post.imageUrl" alt="Post Image" class="post-image" />
+        <img 
+          [src]="post.imageUrl" 
+          (error)="onImageError($event)"
+          alt="Post Image" 
+          class="post-image" 
+        />
         <p class="post-caption">{{ post.caption }}</p>
       </div>
     </div>
@@ -39,7 +44,7 @@
         <span class="username">{{ user.username }}</span>
         <span class="sub-text">{{ user.bio }}</span>
       </div>
-       <button 
+      <button 
         class="follow-btn" 
         (click)="toggleFollow(user.id)"
         [ngClass]="{ 

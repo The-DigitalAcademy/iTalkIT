@@ -1,4 +1,3 @@
-// src/app/store/auth/auth.effects.ts
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
@@ -15,25 +14,24 @@ export class AuthEffects {
     private router: Router
   ) {}
 
-// Register Effect
-register$ = createEffect(() =>
-   this.actions$.pipe(
-    ofType(AuthActions.register),
-    mergeMap(({ request }) =>
-      this.authService.register(request).pipe(
-        map(response =>
-          AuthActions.registerSuccess({ response })
-        ),
-        catchError(error =>
-          of(AuthActions.registerFailure({
-            error: error.error?.message || 'Registration failed'
-          }))
+  // Register Effect
+  register$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.register),
+      mergeMap(({ request }) =>
+        this.authService.register(request).pipe(
+          map(response =>
+            AuthActions.registerSuccess({ response })
+          ),
+          catchError(error =>
+            of(AuthActions.registerFailure({
+              error: error.error?.message || 'Registration failed'
+            }))
+          )
         )
       )
     )
-  )
-);
-
+  );
 
   // Register Success Effect – Redirect to login
   registerSuccess$ = createEffect(
@@ -42,7 +40,6 @@ register$ = createEffect(() =>
         ofType(AuthActions.registerSuccess),
         tap(({ response }) => {
           console.log('Registration successful:', response);
-          // Optional: show success toast
           this.router.navigate(['/login']);
         })
       ),
@@ -56,11 +53,11 @@ register$ = createEffect(() =>
         ofType(AuthActions.registerFailure),
         tap(({ error }) => {
           console.error('Registration failed:', error);
-          // Optional: show toast/snackbar
         })
       ),
     { dispatch: false }
   );
+
   // Login Effect
   login$ = createEffect(() =>
     this.actions$.pipe(
@@ -82,19 +79,27 @@ register$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginSuccess),
       tap(({ response }) => {
-        // Save to storage
-        const storage = localStorage.getItem('rememberMe') === 'true' 
-          ? localStorage 
-          : sessionStorage;
+        console.log('Login success effect - response:', response);
         
+        // Determine storage type
+        const rememberMe = localStorage.getItem('rememberMe') === 'true';
+        const storage = rememberMe ? localStorage : sessionStorage;
+        
+        // Save to storage
         storage.setItem('accessToken', response.accessToken);
         if (response.refreshToken) {
           storage.setItem('refreshToken', response.refreshToken);
         }
         storage.setItem('user', JSON.stringify(response.user));
         
-        // Redirect to home or return URL
-        const returnUrl = this.router.routerState.snapshot.root.queryParams['returnUrl'] || '/';
+        console.log('Saved to storage:', {
+          storage: rememberMe ? 'localStorage' : 'sessionStorage',
+          accessToken: response.accessToken,
+          user: response.user
+        });
+        
+        // Redirect to home
+        const returnUrl = this.router.routerState.snapshot.root.queryParams['returnUrl'] || '/home';
         this.router.navigate([returnUrl]);
       })
     ),
@@ -107,7 +112,6 @@ register$ = createEffect(() =>
       ofType(AuthActions.loginFailure),
       tap(({ error }) => {
         console.error('Login failed:', error);
-        // You could show a toast notification here
       })
     ),
     { dispatch: false }
@@ -170,7 +174,7 @@ register$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.forgotPasswordSuccess),
       tap(({ message }) => {
-        alert(message); // Or show a toast notification
+        alert(message);
       })
     ),
     { dispatch: false }
